@@ -1,10 +1,363 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>CedrApps</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>CedrApps • PreNote</title>
+  <meta name="description" content="CedrApps developer website. PreNote is a privacy-first note app with encryption and secure export." />
+
+  <!-- Open Graph (WhatsApp / Facebook / LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="PreNote by CedrApps" />
+  <meta property="og:description" content="Privacy-first notes with encryption and secure export. Available on Google Play." />
+  <meta property="og:url" content="https://cedrapps.github.io/" />
+  <meta property="og:image" content="https://cedrapps.github.io/playstore.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PreNote by CedrApps" />
+  <meta name="twitter:description" content="Privacy-first notes with encryption and secure export." />
+  <meta name="twitter:image" content="https://cedrapps.github.io/playstore.png" />
+
+  <style>
+    :root {
+      --bg: #0b0b12;
+      --card: rgba(255,255,255,0.06);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --border: rgba(255,255,255,0.12);
+      --accent: #8a5cff;
+      --shadow: 0 12px 40px rgba(0,0,0,0.45);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 500px at 15% 0%, rgba(138,92,255,0.35), transparent 60%),
+        radial-gradient(800px 450px at 85% 10%, rgba(184,156,255,0.18), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 26px;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #8a5cff, #b89cff);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .brand span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pill {
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-family: ui-monospace, monospace;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 18px;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      backdrop-filter: blur(10px);
+    }
+
+    /* --- PreNote header with icon --- */
+    .appHeader {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .appIconMain {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+
+    .appIconMain img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .headline {
+      margin: 0;
+      font-size: 34px;
+    }
+
+    .sub {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .badge {
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.18);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: transform .1s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #8a5cff, #b89cff);
+      color: #090912;
+      border: none;
+    }
+
+    .btn.ghost {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .feature h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+    }
+
+    .feature p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .links {
+      display: grid;
+      gap: 10px;
+    }
+
+    .linkRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.16);
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .linkRow span {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
 </head>
+
 <body>
-  <h1>CedrApps</h1>
-  <p>Developer website for PreNote.</p>
+  <div class="wrap">
+
+    <header>
+      <a class="brand" href="https://cedrapps.github.io/">
+        <div class="logo">C</div>
+        <div>
+          <h1>CedrApps</h1>
+          <span>Privacy-first Android apps</span>
+        </div>
+      </a>
+      <div class="pill">com.cedrapps.prenote</div>
+    </header>
+
+    <section class="hero">
+
+      <!-- MAIN CARD -->
+      <div class="card">
+
+        <div class="appHeader">
+          <div class="appIconMain">
+            <img src="playstore.png" alt="PreNote icon">
+          </div>
+          <h2 class="headline">PreNote</h2>
+        </div>
+
+        <p class="sub">
+          A lightweight, privacy-focused note app built around encryption.
+          Write sensitive notes, store them securely, and export encrypted content safely.
+        </p>
+
+        <div class="badges">
+          <div class="badge">Encryption-first</div>
+          <div class="badge">Offline</div>
+          <div class="badge">Secure export</div>
+          <div class="badge">Simple UI</div>
+        </div>
+
+        <div class="actions">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.cedrapps.prenote" target="_blank">
+            Get it on Google Play
+          </a>
+          <a class="btn ghost" href="https://cedrapps.github.io/app-ads.txt" target="_blank">
+            app-ads.txt
+          </a>
+        </div>
+
+        <div class="grid">
+          <div class="feature">
+            <h3>Encrypted at rest</h3>
+            <p>Notes are protected on your device using strong encryption.</p>
+          </div>
+          <div class="feature">
+            <h3>Encrypted export</h3>
+            <p>Share notes as encrypted files that can be decrypted in a browser.</p>
+          </div>
+          <div class="feature">
+            <h3>No account</h3>
+            <p>No sign-up, no tracking, no cloud dependency.</p>
+          </div>
+          <div class="feature">
+            <h3>Designed for clarity</h3>
+            <p>Minimal UI focused on speed and usability.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDE CARD -->
+      <aside class="card">
+        <strong>Developer</strong>
+        <p class="sub" style="margin-top:4px;">CedrApps</p>
+
+        <div class="links">
+          <a class="linkRow" href="https://play.google.com/store/apps/details?id=com.cedrapps.prenote" target="_blank">
+            <div>
+              <strong>Google Play</strong><br>
+              <span>Official listing</span>
+            </div>
+            ↗
+          </a>
+
+          <a class="linkRow" href="https://cedrapps.github.io/prenote-privacy/" target="_blank">
+            <div>
+              <strong>Privacy Policy</strong><br>
+              <span>How data is handled</span>
+            </div>
+            ↗
+          </a>
+
+          <a class="linkRow" href="mailto:cedrapps@gmail.com">
+            <div>
+              <strong>Support</strong><br>
+              <span>Contact developer</span>
+            </div>
+            ✉
+          </a>
+        </div>
+
+        <footer>
+          © <span id="y"></span> CedrApps
+        </footer>
+      </aside>
+
+    </section>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
